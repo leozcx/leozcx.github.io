@@ -34,9 +34,6 @@ if (process.env.DEVELOPMENT)
 nconf.file('./config/app.json');
 ```
 越先载入的优先级越高，比如上面配置项的优先级为：argv > env > file。
-<<<<<<< HEAD
 
-=======
->>>>>>> 63583d139c1d40f74c850d580e21cafdb4a00a5b
 ### 不同的配置提供方式
 配置可以不同的方式提供，上面的例子就涉及到：参数，环境变量，文件。nconf支持可扩展的配置来源，比如可以将配置保存在redis数据库中，用"nconf-redis"读取。
