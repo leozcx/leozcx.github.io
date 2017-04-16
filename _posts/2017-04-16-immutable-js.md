@@ -1,3 +1,9 @@
+---
+layout: post
+title: Immutable 应用及实现
+author: Leo
+---
+
 # Why immutable
 
 Immutable，不可变的：对象一旦创建，就不能再改变；有什么用呢？让开发更简单。看下面的例子：
@@ -124,7 +130,7 @@ immutable-js是Facebook开源的一款实现了immutable特性的库，它通过
 
 ## Persistent data structure
 
-	In computing, a persistent data structure is a data structure that always preserves the previous version of itself when it is modified. Such data structures are effectively immutable, as their operations do not (visibly) update the structure in-place, but instead always yield a new updated structure.
+> In computing, a persistent data structure is a data structure that always preserves the previous version of itself when it is modified. Such data structures are effectively immutable, as their operations do not (visibly) update the structure in-place, but instead always yield a new updated structure.
 	
 简单来说，在做拷贝时，并不需要拷贝所有的属性，只需要拷贝发生变化的那些，不变的那些还可以被重用，这就是 structure sharing。
 
@@ -143,7 +149,7 @@ const data = {
 }
 ```
 我们用 [字典树Trie] (https://en.wikipedia.org/wiki/Trie) 这种数据结构保存它：
-![字典树]()
+![字典树](https://raw.githubusercontent.com/leozcx/leozcx.github.io/master/images/trie.png)
 
 对于属性获取，比如要获取属性 `ten`, 只需要按如下顺序 `t -> e -> n` 查找，即可找到值 12.
 
