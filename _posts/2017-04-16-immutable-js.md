@@ -126,7 +126,7 @@ console.timeEnd('Object.assign 10000')
 
 # immutable-js
 
-immutable-js是Facebook开源的一款实现了immutable特性的库，它通过巧妙的方式，在imutable和性能之间达到一种平衡： [Persistent data structures] (https://en.wikipedia.org/wiki/Persistent_data_structure)
+immutable-js是Facebook开源的一款实现了immutable特性的库，它通过巧妙的方式，在imutable和性能之间达到一种平衡： [Persistent data structures](https://en.wikipedia.org/wiki/Persistent_data_structure)
 
 ## Persistent data structure
 
