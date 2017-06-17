@@ -120,13 +120,13 @@ getAstralCodePoint(0xD83D, 0xDE00); // => 0x1F600
 
 > A **grapheme**, or **symbol**, is a minimally distinctive unit of writing in the context of a particular writing system.
 
-**grapheme** 是用户直观上感受到的*+*一个**符号，显示在屏幕上被称为一个**glyph**.
+**grapheme** 是用户直观上感受到的**一个**符号，显示在屏幕上被称为一个**glyph**.
 
 多数情况下，一个Unicode character代表一个glyph，比如'LATIN SMALL LETTER F'的unicode是 U+0066，显示在屏幕上是'f'：一个字符。
 
 但还存在另外的情况，比如这个字符：&#xe5; 。 从直观的视觉上来看，这是一个字符，但实际上它是由2个unicode字符组合而成：字符a以及上面的圆圈：U+0061以及U+030A.
 
-U+030A修改了前面的字符，称为**combining mark**
+U+030A修改了前面的字符，称为**combining mark**.
 
 > **Combining mark** is a character that applies to the precedent base character to create a grapheme.
 
@@ -182,12 +182,43 @@ es6对于String的[规范](http://www.ecma-international.org/ecma-262/6.0/#sec-e
 
 讲到这里，相信大家对开头提到的几个概念应该有清晰的理解了：
 
-- Unicode, GB2312, GBK, ISO 8859-1, ASCII 都是不同的字符集，它们字义了数字到字符的映射关系，可以称为**charsets**
-- utf-8, utf-16 定义的是数字如何存储，它们是Unicode对于存储的实现方式，可以称为**encodings**
+- Unicode, GB2312, GBK, ISO 8859-1, ASCII 都是不同的字符集，它们字义了数字到字符的映射关系，可以称为**charsets**.
+- utf-8, utf-16 定义的是数字如何存储，它们是Unicode对于存储的实现方式，可以称为**encodings**.
 
-## 参数文件
-[http://unicode.org/] (http://unicode.org/)
+## 展开
 
-[https://rainsoft.io/what-every-javascript-developer-should-know-about-unicode/] (https://rainsoft.io/what-every-javascript-developer-should-know-about-unicode/)
+这里再稍微展开一点，介绍一下utf-8, utf-16.
+
+Unicode 字符既可以用utf-8编码来存储，也可以用utf-16，它们的编码方式是不同的。
+
+### utf-8
+
+> **U**nicode **T**ransformation **F**ormat **8**-bit is a variable-width encoding that can represent every character in the Unicode character set.
+
+对于**code point**在不同范围的Unicode字符，utf-8用1-4个字节来表示；这里的**8**表示基本的字节单位，即是以**8**个比特为单位。**code point**在U+0000 - U+007F之间的字符，只用1个字节表示，第一个比特置0；U+007F-U+0x07FF之间的用2个字节，第一个字节的前2个比特置1，第3个比特置0，第2个字节的第1个比特置1，第2个比特置0，通过这种方式来判断当前字节占几个字节；详细信息如下表所示：
+
+|第1字节 | 第2字节 | 第3字节 | 第4字节 | 范围 | 字符|
+|----|----|----|----|----|----|
+|0xxxxxxx||||< 007F(127)|ASCII|
+|110xxxxx|10xxxxxx|||< 07FF|
+|1110xxxx|10xxxxxx|10xxxxxx||< FFFF|BMP(中文）|
+|11110xxx|10xxxxxx|10xxxxxx|10xxxxxx|< 10FFFF|
+
+可以看到，对于纯英文来说，utf-8的存储效率是非常高效的，每个字符只占1个字节；但对于中文，每个字符要占3个字节。
+
+
+### utf-16
+
+上面介绍过js里是用utf-16编码，对比utf-8，utf-16用16个比特作为基本单位，所以一个字符占用的字节数可能是2或者4：
+
+- 2个字节：BMP
+- 4个字节：其余字符
+
+所以，中文字符占2个字节；如果内容以中文占多数，用utf-16要比utf-8占更少的存储空间。
+
+## 参考资料
+[http://unicode.org/](http://unicode.org/)
+
+[https://rainsoft.io/what-every-javascript-developer-should-know-about-unicode/](https://rainsoft.io/what-every-javascript-developer-should-know-about-unicode/)
 
 [http://unicodebook.readthedocs.io/unicode.html](http://unicodebook.readthedocs.io/unicode.html)
